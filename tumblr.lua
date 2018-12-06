@@ -153,7 +153,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   end
   
   if status_code >= 500 or
-    (status_code >= 400 and status_code < 403 and status_code ~= 404) or
+    (status_code > 400 and status_code < 403 and status_code ~= 404) or
     status_code == 0 or
     status_code > 404 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
@@ -173,9 +173,10 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       return wget.actions.CONTINUE
     end
   end
-  if status_code == 403 then
+  if status_code == 403 or status_code == 400 then
     if string.match(url["host"], "assets.tumblr.com$")
-    or string.match(url["host"], "tumblr.zendesk.com$") then
+    or string.match(url["host"], "tumblr.zendesk.com$")
+    or string.match(url["host"], ".+.media.tumblr.com") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
       return wget.actions.EXIT
     else
