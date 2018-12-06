@@ -47,7 +47,8 @@ allowed = function(url, parenturl)
   or string.match(url, "https?://reddit.com")
   or string.match(url, "https?://twitter.com")
   or string.match(url, "https?://facebook.com")
-  or string.match(url, "https?://[a-zA-Z]+.adobe.com") then
+  or string.match(url, "https?://[a-zA-Z]+.adobe.com")
+  or string.match(url, "https?://ipv[4-6]..+.yahoodns.net") then
     return false
   end
   
