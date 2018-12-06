@@ -61,7 +61,7 @@ if not WGET_LUA:
 VERSION = '20181206.05'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam)'
 TRACKER_ID = 'tumbledown'
-TRACKER_HOST = 'tracker.archiveteam.org'
+TRACKER_HOST = '192.168.1.194:9080'
 
 
 ###########################################################################
