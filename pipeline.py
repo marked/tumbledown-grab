@@ -58,7 +58,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = '20181206.07'
+VERSION = '20181206.08'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam)'
 TRACKER_ID = 'tumbledown'
 TRACKER_HOST = '192.168.1.194:9080'
@@ -194,12 +194,17 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
 
+		
+		#Write blog name to file
+		f = open("blog","w+")
+		
         if item_type == 'tumblr-blog':
             split_items = item_value.split(':')
             for x in split_items:
                 wget_args.extend(['--warc-header', 'tumblr-blog: ' + x])
                 wget_args.append('http://{}.tumblr.com/'.format(x))
                 wget_args.append('http://{}.tumblr.com/sitemap.xml'.format(x))
+				f.write("{}\n".format(x))
         else:
             raise Exception('Unknown item')
 

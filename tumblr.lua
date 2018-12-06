@@ -35,11 +35,16 @@ read_file = function(file)
 end
 
 allowed = function(url, parenturl)
+  local blog = read_file("blog")
+  local concat = "http://" .. blog .. ".tumblr.com"
   if string.match(url, "'+") or string.match(url, "[<>\\%*%$;%^%[%],%(%)]") or string.match(url, "//$") then
     return false
   end
   
-  if string.match(url, "^https?://.+.tumblr.com/") then
+  if string.gmatch(url, concat)
+  or string.match(url, "^https?://.+.media.tumblr.com")
+  or string.match(url, "^https?://static.tumblr.com")
+  or string.match(url, "^https?://assets.tumblr.com") then
     return true
   end
   
