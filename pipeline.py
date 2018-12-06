@@ -175,7 +175,6 @@ class WgetArgs(object):
             '--rotate-dns',
             '--recursive', '--level=inf',
             '--no-parent',
-            '--page-requisites',
             '--timeout', '30',
             '--tries', 'inf',
             '--domains', 'tumblr.com',

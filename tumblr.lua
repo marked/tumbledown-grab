@@ -183,6 +183,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       return wget.actions.CONTINUE
     end
   end
+  tries = 0
   if status_code == 403 or status_code == 400 or status_code == 0 then
     if string.match(url["host"], "assets.tumblr.com$")
     or string.match(url["host"], "tumblr.zendesk.com$")
