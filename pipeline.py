@@ -175,9 +175,9 @@ class WgetArgs(object):
             '--rotate-dns',
             '--recursive', '--level=inf',
             '--no-parent',
+            '--page-requisites',
             '--timeout', '30',
             '--tries', 'inf',
-            '--domains', 'tumblr.com',
             '--span-hosts',
             '--waitretry', '30',
             '--warc-file', ItemInterpolation('%(item_dir)s/%(warc_file_base)s'),
@@ -198,6 +198,7 @@ class WgetArgs(object):
         if item_type == 'tumblr-blog':
             split_items = item_value.split(':')
             for x in split_items:
+                wget_args.extend(['--domains', '{}.tumblr.com'.format(x)])
                 wget_args.extend(['--warc-header', 'tumblr-blog: ' + x])
                 wget_args.append('http://{}.tumblr.com/'.format(x))
                 wget_args.append('http://{}.tumblr.com/sitemap.xml'.format(x))
