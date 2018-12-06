@@ -37,7 +37,7 @@ end
 allowed = function(url, parenturl)
   local blog = read_file("blog")
   local concat = "http://" .. blog .. ".tumblr.com"
-  if string.match(url, "'+") or string.match(url, "[<>\\%*%$;%^%[%],%(%)]") or string.match(url, "//$") or string.match(url, "https?://www") or string.match(url, "https?://.+.facebook.com/login.php") or string.match(url, "px.srvcs.tumblr.com") or string.match(url, "https?://.+.reddit.com/login") then
+  if string.match(url, "'+") or string.match(url, "[<>\\%*%$;%^%[%],%(%)]") or string.match(url, "//$") or string.match(url, "https?://www") or string.match(url, "https?://.+.facebook.com") or string.match(url, "px.srvcs.tumblr.com") or string.match(url, "https?://.+.reddit.com") then
     return false
   end
   
