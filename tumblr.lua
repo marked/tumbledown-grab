@@ -36,7 +36,7 @@ end
 
 allowed = function(url, parenturl)
   local blog = read_file("blog")
-  local concat = "http://" .. blog .. ".tumblr.com"
+  local concat = "https?://" .. blog .. ".tumblr.com"
   if string.match(url, "'+")
   or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
   or string.match(url, "//$")
@@ -64,11 +64,6 @@ end
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
   local html = urlpos["link_expect_html"]
-  
-  if string.find(urlpos["url"]["url"], "px.srvcs.tumblr.com") then
-    -- Ignore px.srvcs.tumblr.com tracking domain
-    return false
-  end
   
   if (downloaded[url] ~= true and addedtolist[url] ~= true)
   and (allowed(url, parent["url"]) or html == 0) then
