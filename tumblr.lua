@@ -174,7 +174,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     end
   end
   if status_code == 403 then
-    if string.match(url["host"], "assets.tumblr.com$") then
+    if string.match(url["host"], "assets.tumblr.com$")
+    or string.match(url["host"], "tumblr.zendesk.com$") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
       return wget.actions.EXIT
     else
