@@ -193,10 +193,6 @@ class WgetArgs(object):
 
         item['item_type'] = item_type
         item['item_value'] = item_value
-
-		
-		#Write blog name to file
-		f = open("blog","w+")
 		
         if item_type == 'tumblr-blog':
             split_items = item_value.split(':')
@@ -204,7 +200,6 @@ class WgetArgs(object):
                 wget_args.extend(['--warc-header', 'tumblr-blog: ' + x])
                 wget_args.append('http://{}.tumblr.com/'.format(x))
                 wget_args.append('http://{}.tumblr.com/sitemap.xml'.format(x))
-				f.write("{}\n".format(x))
         else:
             raise Exception('Unknown item')
 
