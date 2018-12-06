@@ -194,6 +194,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     or string.match(url["host"], "radar.cedexis.com")
     or string.match(url["host"], ".+") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
+      tries = 0
       return wget.actions.EXIT
     else
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Sleeping.\n")
