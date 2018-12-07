@@ -3,6 +3,7 @@
 
 -- Print contents of `tbl`, with indentation.
 -- `indent` sets the initial level of indentation.
+debug = 1
 function tprint (tbl, indent)
   if not indent then indent = 0 end
   for k, v in pairs(tbl) do
@@ -20,13 +21,14 @@ function tprint (tbl, indent)
 end
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
-  -- io.stdout:write("### download_child_p\n")
-  -- io.stdout:write("        url: " .. urlpos["url"]["url"] .. "\n")
-  -- io.stdout:write("link_inline: " .. urlpos["link_inline_p"] .. "\n")
-  -- io.stdout:write("    verdict: " .. tostring(verdict) .. "\n")
-  -- io.stdout:write("     reason: " .. tostring(reason) .. "\n")
-  -- -- tprint(urlpos, 1)
-  -- io.stdout:flush()
+  --[[ 
+       io.stdout:write("\n### download_child_p\n")
+       io.stdout:write("        url: " .. urlpos["url"]["url"] .. "\n")
+       io.stdout:write("link_inline: " .. urlpos["link_inline_p"] .. "\n")
+       io.stdout:write("    verdict: " .. tostring(verdict) .. "\n")
+       io.stdout:write("     reason: " .. tostring(reason) .. "\n")
+       -- tprint(urlpos, 1)
+       io.stdout:flush()
 
   io.stdout:write("*** URL: " .. urlpos["url"]["url"] .. " " .. tostring(verdict))
   if not verdict then
@@ -34,30 +36,47 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   end
   io.stdout:write("\n")
   io.stdout:flush()
+  --]]
+  --
+
+  --- haywire URL detection
+  if string.match(urlpos["url"]["path"], '[\(\)\+]') then
+    io.stdout:write("*** ILLEGAL CHARS (+) " .. " : " .. urlpos["url"]["url"] .. " ***\n")
+    io.stdout:flush()
+    return false
+  end
 
   -- these are path patterns that should never be followed
   -- TODO: probably want to allow avatar when crawling for real
   local bad_paths = {
-    "^rss$",
-    "^rss/",
+    "^avatar_",
     "^reblog/",
-    "^avatar_"
+    "^rss/?$",
+    "^tagged/",
+    "/embed$",
+    "/amp$"
   }
 
   for _, path in pairs(bad_paths) do
     if string.find(urlpos["url"]["path"], path) then
-      io.stdout:write("*** BLOCKING " .. path .. " ***\n")
+      io.stdout:write("*** BLOCKING " .. path .. " : " .. urlpos["url"]["url"] .. " ***\n")
       io.stdout:flush()
       return false
     end
   end
 
+  local log_host = "assets.tumblr.com$"
+  if string.find(urlpos["url"]["host"], log_host) then
+    io.stdout:write("*** LOGGING " .. log_host .. " : " .. urlpos["url"]["url"] .. " ***\n")
+    io.stdout:flush()
+  end
+
   -- always follow links on the following hosts
   local allowed_hosts = {
     "media.tumblr.com$",
-    "assets.tumblr.com$",
     "static.tumblr.com$",
-    "ajax.googleapis.com$"
+    "ajax.googleapis.com$",
+    --"assets.tumblr.com$"
   }
 
   if verdict == false and reason == "DIFFERENT_HOST" then
