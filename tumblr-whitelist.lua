@@ -76,7 +76,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     "media.tumblr.com$",
     "static.tumblr.com$",
     "ajax.googleapis.com$",
-    --"assets.tumblr.com$"
+    "assets.tumblr.com$"
   }
 
   if verdict == false and reason == "DIFFERENT_HOST" then
