@@ -1,4 +1,5 @@
 -- tumblr.lua
+-- usage: wget --mirror --lua-script=tumblr.lua --warc-file=SITENAME -e robots=off https://SITENAME.tumblr.com/
 
 -- Print contents of `tbl`, with indentation.
 -- `indent` sets the initial level of indentation.
