@@ -112,12 +112,27 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   return verdict
 end
 
--- wget.callbacks.get_urls = function(file, url, is_css, iri)
---   io.stdout:write("### get_urls\n")
---   io.stdout:flush()
---   local urls = {}
---   return urls
--- end
+wget.callbacks.get_urls = function(file, url, is_css, iri)
+   io.stdout:write("### get_urls\n")
+   io.stdout:flush()
+   if string.find(url, "_%d+.[pjg][npi][ggf]$") then
+     io.stdout:write("*** IMAGE resizes " .. url .. " ***\n")
+     local url500 = url
+     local url250 = url
+     -- make sure wget downloads the smaller image sizes
+     return {
+      { url=string.gsub(url500,"_%d+.", "_500."),
+        link_expect_html=0,
+        link_expect_css=0 },
+      { url=string.gsub(url250,"_%d+.", "_250."),
+        link_expect_html=0,
+        link_expect_css=0 }
+    }
+  else
+    -- no new urls to add
+    return {}
+  end
+end
 
 wget.callbacks.httploop_result = function(url, err, http_stat)
   io.stdout:write("*** RESULT: " .. url["url"] .. " " .. tostring(http_stat["statcode"]) .. "/" .. http_stat["message"] .. "\n")
