@@ -41,8 +41,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local allowed_hosts = {
     "media.tumblr.com$",
     "static.tumblr.com$",
-    "ajax.googleapis.com$",
-    "assets.tumblr.com$"
+    -- "ajax.googleapis.com$",  -- archive.org has these from archive.bot, uncomment for offline .warc
+    -- "assets.tumblr.com$"     -- archive.org has these from archive.bot, uncomment for offline .warc
   }
 
   if verdict == false and reason == "DIFFERENT_HOST" then
