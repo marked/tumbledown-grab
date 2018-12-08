@@ -41,7 +41,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   --- haywire URL detection
   if string.match(urlpos["url"]["path"], '[+()%%]') then
-    io.stdout:write("*** ILLEGAL CHARS (+) " .. " : " .. urlpos["url"]["url"] .. " from " .. parent["url"] .. " ***\n")
+    io.stdout:write("*** ILLEGAL CHARS +()% " .. " : " .. urlpos["url"]["url"] .. " from " .. parent["url"] .. " ***\n")
     io.stdout:flush()
     return false
   end
