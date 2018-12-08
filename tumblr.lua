@@ -1,10 +1,12 @@
 dofile("table_show.lua")
 dofile("urlcode.lua")
 
+--[[
 local item_type = os.getenv('item_type')
 local item_value = os.getenv('item_value')
 local item_dir = os.getenv('item_dir')
 local warc_file_base = os.getenv('warc_file_base')
+--]]
 
 local ids = {}
 
@@ -14,14 +16,11 @@ local downloaded = {}
 local addedtolist = {}
 local abortgrab = false
 
--- Tumblr seem to be using epoch time on the /archive endpoint
--- Goal: Get more posts, using epoch minus time in seconds for each month
-local epochtime = 1543953699
-local epochpermonth = 2629743
-
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
 end
+
+-----------   -----------
 
 read_file = function(file)
   if file then
@@ -34,6 +33,8 @@ read_file = function(file)
   end
 end
 
+-----------   -----------
+
 allowed = function(url, parenturl)
   if string.match(url, "'+") or string.match(url, "[<>\\%*%$;%^%[%],%(%)]") or string.match(url, "//$") then
     return false
@@ -45,6 +46,8 @@ allowed = function(url, parenturl)
   
   return false
 end
+
+-----------   -----------
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
@@ -63,6 +66,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   
   return false
 end
+
+-----------   -----------
 
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
@@ -134,6 +139,8 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
 
   return urls
 end
+
+-----------   -----------
 
 wget.callbacks.httploop_result = function(url, err, http_stat)
   status_code = http_stat["statcode"]
@@ -207,6 +214,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
 
   return wget.actions.NOTHING
 end
+
+-----------   -----------
 
 wget.callbacks.before_exit = function(exit_status, exit_status_string)
   if abortgrab == true then
