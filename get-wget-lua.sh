@@ -37,11 +37,11 @@ else
 fi
 
 while true; do
-    read -p "Do you want to patch the src for fedora?" yn
+    read -p "Do you want to patch the src for fedora? " yn
     case $yn in
         [Yy]* ) sed -i 's%lua5.1%lua-5.1%g' configure.ac ; break;;
         [Nn]* ) break ;;
-        * ) echo "Please answer yes or no.";;
+        * ) echo "Please answer yes or no. ";;
     esac
 done
 
