@@ -4,23 +4,6 @@
 -----------   -----------
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
-  --[[ 
-       io.stdout:write("\n### download_child_p\n")
-       io.stdout:write("        url: " .. urlpos["url"]["url"] .. "\n")
-       io.stdout:write("link_inline: " .. urlpos["link_inline_p"] .. "\n")
-       io.stdout:write("    verdict: " .. tostring(verdict) .. "\n")
-       io.stdout:write("     reason: " .. tostring(reason) .. "\n")
-       -- tprint(urlpos, 1)
-       io.stdout:flush()
-
-       io.stdout:write("*** URL: " .. urlpos["url"]["url"] .. " " .. tostring(verdict))
-       if not verdict then
-         io.stdout:write(" " .. reason)
-       end
-       io.stdout:write("\n")
-       io.stdout:flush()
-  --]]
-
 
   --- haywire URL detection
   if string.match(urlpos["url"]["path"], '[+()%%]') then
