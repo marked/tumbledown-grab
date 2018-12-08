@@ -36,7 +36,16 @@ else
   exit 1
 fi
 
-if ./configure $CONFIGURE_SSL_OPT --disable-nls && make && src/wget -V | grep -q lua
+while true; do
+    read -p "Do you want to patch the src for fedora?" yn
+    case $yn in
+        [Yy]* ) sed -i 's%lua5.1%lua-5.1%g' configure.ac ; break;;
+        [Nn]* ) break ;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+if autoconf && ./configure $CONFIGURE_SSL_OPT --disable-nls && make && src/wget -V | grep -q lua
 then
   cp src/wget ../wget-lua
   cd ../
