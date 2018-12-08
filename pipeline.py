@@ -58,10 +58,10 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = '20181206.05'
+VERSION = '20181207.01'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam)'
 TRACKER_ID = 'tumbledown'
-TRACKER_HOST = 'tracker.archiveteam.org'
+TRACKER_HOST = 'server5.kiska.pw:9080'
 
 
 ###########################################################################
@@ -146,7 +146,7 @@ def get_hash(filename):
 
 CWD = os.getcwd()
 PIPELINE_SHA1 = get_hash(os.path.join(CWD, 'pipeline.py'))
-LUA_SHA1 = get_hash(os.path.join(CWD, 'tumblr.lua'))
+LUA_SHA1 = get_hash(os.path.join(CWD, 'tumblr-whitelist.lua'))
 
 def stats_id_function(item):
     # NEW for 2014! Some accountability hashes and stats.
@@ -163,23 +163,20 @@ class WgetArgs(object):
     def realize(self, item):
         wget_args = [
             WGET_LUA,
-            '-U', USER_AGENT,
-            '-nv',
+            '--wait', '2',
+            '--mirror',
             '--no-cookies',
-            '--lua-script', 'tumblr.lua',
+            '--lua-script', 'tumblr-whitelist.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
             '--output-document', ItemInterpolation('%(item_dir)s/wget.tmp'),
             '--truncate-output',
             '-e', 'robots=off',
             '--rotate-dns',
-            '--recursive', '--level=inf',
+            '--recursive', '--level=inf',	
             '--no-parent',
-            '--page-requisites',
             '--timeout', '30',
             '--tries', 'inf',
-            '--domains', 'tumblr.com',
-            '--span-hosts',
             '--waitretry', '30',
             '--warc-file', ItemInterpolation('%(item_dir)s/%(warc_file_base)s'),
             '--warc-header', 'operator: Archive Team',
