@@ -1,25 +1,6 @@
 -- tumblr.lua
 -- usage: wget --mirror --lua-script=tumblr.lua --warc-file=SITENAME -e robots=off https://SITENAME.tumblr.com/
 
--- Print contents of `tbl`, with indentation.
--- `indent` sets the initial level of indentation.
-debug = 1
-function tprint (tbl, indent)
-  if not indent then indent = 0 end
-  for k, v in pairs(tbl) do
-    formatting = string.rep("  ", indent) .. k .. ": "
-    if type(v) == "table" then
-      io.stdout:write(formatting .. "\n")
-      tprint(v, indent+1)
-    elseif type(v) == 'boolean' then
-      io.stdout:write(formatting .. tostring(v) .. "\n")      
-    else
-      io.stdout:write(formatting .. v .. "\n")
-    end
-  end
-  io.stdout:flush()
-end
-
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   --[[ 
        io.stdout:write("\n### download_child_p\n")
