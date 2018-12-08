@@ -50,12 +50,13 @@ then
   rm -rf get-wget-lua.tmp
   exit 0
 fi
-done
+
 echo
 echo "wget-lua not successfully built."
 echo "attempting patch for RedHat"
 echo
 sed -i 's%lua5.1%lua-5.1%g' configure.ac
+
 if autoconf && ./configure $CONFIGURE_SSL_OPT --disable-nls && make && src/wget -V | grep -q lua
 then
   cp src/wget ../wget-lua
