@@ -59,7 +59,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   for _, path in pairs(bad_paths) do
     if string.find(urlpos["url"]["path"], path) then
-      io.stdout:write("*** BLOCKING " .. path .. " : " .. urlpos["url"]["url"] .. " ***\n")
+      io.stdout:write("*** BLOCKING " .. path .. " : " .. urlpos["url"]["url"] .. " from " .. parent["url"] .. " ***\n")
       io.stdout:flush()
       return false
     end
@@ -67,7 +67,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   local log_host = "assets.tumblr.com$"
   if string.find(urlpos["url"]["host"], log_host) then
-    io.stdout:write("*** LOGGING " .. log_host .. " : " .. urlpos["url"]["url"] .. " ***\n")
+    io.stdout:write("*** LOGGING " .. log_host .. " : " .. urlpos["url"]["url"] .. " from " .. parent["url"] .. " ***\n")
     io.stdout:flush()
   end
 
@@ -82,7 +82,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   if verdict == false and reason == "DIFFERENT_HOST" then
     for _, host in pairs(allowed_hosts) do
       if string.find(urlpos["url"]["host"], host) then
-        io.stdout:write("*** ALLOWING HOST " .. urlpos["url"]["host"] .. " ***\n")
+        io.stdout:write("*** ALLOWING HOST " .. urlpos["url"]["host"] .. " from " .. parent["url"] .. " ***\n")
         io.stdout:flush()
         return true
       end
