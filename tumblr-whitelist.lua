@@ -1,6 +1,8 @@
 -- tumblr.lua
 -- usage: wget --mirror --lua-script=tumblr.lua --warc-file=SITENAME -e robots=off https://SITENAME.tumblr.com/
 
+-----------   -----------
+
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   --[[ 
        io.stdout:write("\n### download_child_p\n")
@@ -11,14 +13,14 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
        -- tprint(urlpos, 1)
        io.stdout:flush()
 
-  io.stdout:write("*** URL: " .. urlpos["url"]["url"] .. " " .. tostring(verdict))
-  if not verdict then
-    io.stdout:write(" " .. reason)
-  end
-  io.stdout:write("\n")
-  io.stdout:flush()
+       io.stdout:write("*** URL: " .. urlpos["url"]["url"] .. " " .. tostring(verdict))
+       if not verdict then
+         io.stdout:write(" " .. reason)
+       end
+       io.stdout:write("\n")
+       io.stdout:flush()
   --]]
-  --
+
 
   --- haywire URL detection
   if string.match(urlpos["url"]["path"], '[+()%%]') then
@@ -89,9 +91,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     io.stdout:flush()
     return true
   end
-
+  
   return verdict
 end
+
+-----------   -----------
 
 wget.callbacks.get_urls = function(file, url, is_css, iri)
    io.stdout:write("### get_urls\n")
@@ -102,21 +106,23 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
      local url250 = url
      -- make sure wget downloads the smaller image sizes
      return {
-      { url=string.gsub(url500,"_%d+.", "_500."),
-        link_expect_html=0,
-        link_expect_css=0 },
-      { url=string.gsub(url250,"_%d+.", "_250."),
-        link_expect_html=0,
-        link_expect_css=0 }
-    }
+      { url = string.gsub(url500,"_%d+.", "_500."),
+             link_expect_html = 0,  link_expect_css = 0 },
+      { url = string.gsub(url250,"_%d+.", "_250."),
+             link_expect_html = 0,  link_expect_css = 0 }
+      }
   else
     -- no new urls to add
-    return {}
+    return { }
   end
 end
+
+-----------   -----------
 
 wget.callbacks.httploop_result = function(url, err, http_stat)
   io.stdout:write("*** RESULT: " .. url["url"] .. " " .. tostring(http_stat["statcode"]) .. "/" .. http_stat["message"] .. "\n")
   io.stdout:flush()
   return wget.actions.NOTHING
 end
+
+-----------   -----------
