@@ -61,7 +61,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       reason == "DIFFERENT_HOST" and 
       urlpos["url"]["host"] == "www.tumblr.com" and 
       string.find(urlpos["url"]["path"], "^video/") then
-    io.stdout:write("*** ALLOWING VIDEO " .. urlpos["url"]["url"] .. " ***\n")
+    io.stdout:write("*** ALLOWING VIDEO precursors" .. urlpos["url"]["url"] .. " ***\n")
     io.stdout:flush()
     return true
   end
@@ -71,7 +71,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       reason == "DIFFERENT_HOST" and
       string.find(urlpos["url"]["host"], "tumblr.com$") and
       string.find(urlpos["url"]["path"], "^video_file/") then
-      io.stdout:write("*** LOGGING VIDEO " .. urlpos["url"]["url"] .. " ***\n")
+      io.stdout:write("*** LOGGING VIDEO file" .. urlpos["url"]["url"] .. " ***\n")
       io.stdout:flush()
     return true
   end
