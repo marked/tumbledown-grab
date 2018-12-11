@@ -58,9 +58,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   -- always follow links matching www.tumblr.com/video
   if verdict == false and 
-      reason == "DIFFERENT_HOST" and 
-      urlpos["url"]["host"] == "www.tumblr.com" and 
-      string.find(urlpos["url"]["path"], "^video/") then
+    reason == "DIFFERENT_HOST" and 
+    urlpos["url"]["host"] == "www.tumblr.com" and 
+    string.find(urlpos["url"]["path"], "^video/") then
     io.stdout:write("*** ALLOWING VIDEO precursors" .. urlpos["url"]["url"] .. " ***\n")
     io.stdout:flush()
     return true
