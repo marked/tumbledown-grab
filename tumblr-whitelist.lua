@@ -88,7 +88,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
      io.stdout:write("*** IMAGE resizes " .. url .. " ***\n")
      local url500 = url
      local url250 = url
-     -- make sure wget downloads the smaller image sizes
+     -- make sure wget downloads the smaller image sizes so thumbnails are reliable
      return {
       { url = string.gsub(url500,"_%d+.", "_500."),
              link_expect_html = 0,  link_expect_css = 0 },
