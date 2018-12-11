@@ -15,7 +15,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   -- these are path patterns that should never be followed
   -- TODO: probably want to allow avatar when crawling for real
   local bad_paths = {
-    "^avatar_",
+    "_16.[gjp][ipn][fgj]$",
+    "_64.[gjp][ipn][fgj]$",
     "^reblog/",
     "^rss/?$",
     --"^tagged/",
