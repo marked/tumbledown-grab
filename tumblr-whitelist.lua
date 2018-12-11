@@ -68,11 +68,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   -- always log links matching tumblr.com/video_file
   if verdict == false and
-      reason == "DIFFERENT_HOST" and
-      string.find(urlpos["url"]["host"], "tumblr.com$") and
-      string.find(urlpos["url"]["path"], "^video_file/") then
-      io.stdout:write("*** LOGGING VIDEO file" .. urlpos["url"]["url"] .. " ***\n")
-      io.stdout:flush()
+    reason == "DIFFERENT_HOST" and
+    string.find(urlpos["url"]["host"], "tumblr.com$") and
+    string.find(urlpos["url"]["path"], "^video_file/") then
+    io.stdout:write("*** LOGGING VIDEO file" .. urlpos["url"]["url"] .. " ***\n")
+    io.stdout:flush()
     return true
   end
   
