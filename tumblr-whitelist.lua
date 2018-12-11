@@ -18,7 +18,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     "^avatar_",
     "^reblog/",
     "^rss/?$",
-    "^tagged/",
+    --"^tagged/",
     "/embed$",
     "/amp$"
   }
