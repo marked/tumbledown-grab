@@ -163,7 +163,6 @@ class WgetArgs(object):
     def realize(self, item):
         wget_args = [
             WGET_LUA,
-            '--wait', '2',
             '--mirror',
             '--no-cookies',
             '--lua-script', 'tumblr-whitelist.lua',
